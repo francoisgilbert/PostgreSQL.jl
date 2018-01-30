@@ -18,10 +18,6 @@ provides(Yum, "libpq5", libpq)
 provides(Yum, "postgresql-libs", libpq)
 provides(Pacman, "postgresql-libs", libpq)
 
-@osx_only begin
-    using Homebrew
-    provides(Homebrew.HB, "postgresql", libpq, os=:Darwin)
-end
 
 provides(SimpleBuild, (@build_steps begin
     BinDeps.DirectoryRule(postgresql_srcdir,  # this isn't exported for some reason

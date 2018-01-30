@@ -4,4 +4,3 @@ DataArrays
 Compat
 JSON
 BinDeps
-@osx Homebrew

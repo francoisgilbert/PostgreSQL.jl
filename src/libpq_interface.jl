@@ -81,7 +81,8 @@ module libpq_interface
            PQfreemem
 
     include("libpq_common.jl")
-
+    const _IO_FILE = Void
+    const FILE = Void
     @c Cint _IO_getc (Ptr{_IO_FILE},) libpq
     @c Cint _IO_putc (Cint, Ptr{_IO_FILE}) libpq
     @c Cint _IO_feof (Ptr{_IO_FILE},) libpq
@@ -94,8 +95,8 @@ module libpq_interface
     @c Cint _IO_vfprintf (Ptr{_IO_FILE}, Ptr{UInt8}, Cint) libpq
     # @c __ssize_t _IO_padn (Ptr{_IO_FILE}, Cint, __ssize_t) libpq
     @c Cint _IO_sgetn (Ptr{_IO_FILE}, Ptr{Void}, Cint) libpq
-    @c __off64_t _IO_seekoff (Ptr{_IO_FILE}, __off64_t, Cint, Cint) libpq
-    @c __off64_t _IO_seekpos (Ptr{_IO_FILE}, __off64_t, Cint) libpq
+ #   @c __off64_t _IO_seekoff (Ptr{_IO_FILE}, __off64_t, Cint, Cint) libpq
+ #   @c __off64_t _IO_seekpos (Ptr{_IO_FILE}, __off64_t, Cint) libpq
     @c Void _IO_free_backup_area (Ptr{_IO_FILE},) libpq
     @c Cint remove (Ptr{UInt8},) libpq
     @c Cint rename (Ptr{UInt8}, Ptr{UInt8}) libpq
@@ -182,15 +183,15 @@ module libpq_interface
     @c Ptr{PGconn} PQconnectdbParams (Ptr{Ptr{UInt8}}, Ptr{Ptr{UInt8}}, Cint) libpq
     @c Ptr{PGconn} PQsetdbLogin (Ptr{UInt8}, Ptr{UInt8}, Ptr{UInt8}, Ptr{UInt8}, Ptr{UInt8}, Ptr{UInt8}, Ptr{UInt8}) libpq
     @c Void PQfinish (Ptr{PGconn},) libpq
-    @c Ptr{PQconninfoOption} PQconndefaults () libpq
-    @c Ptr{PQconninfoOption} PQconninfoParse (Ptr{UInt8}, Ptr{Ptr{UInt8}}) libpq
-    @c Void PQconninfoFree (Ptr{PQconninfoOption},) libpq
+   # @c Ptr{PQconninfoOption} PQconndefaults () libpq
+   # @c Ptr{PQconninfoOption} PQconninfoParse (Ptr{UInt8}, Ptr{Ptr{UInt8}}) libpq
+   # @c Void PQconninfoFree (Ptr{PQconninfoOption},) libpq
     @c Cint PQresetStart (Ptr{PGconn},) libpq
     @c PostgresPollingStatusType PQresetPoll (Ptr{PGconn},) libpq
     @c Void PQreset (Ptr{PGconn},) libpq
-    @c Ptr{PGcancel} PQgetCancel (Ptr{PGconn},) libpq
-    @c Void PQfreeCancel (Ptr{PGcancel},) libpq
-    @c Cint PQcancel (Ptr{PGcancel}, Ptr{UInt8}, Cint) libpq
+  #  @c Ptr{PGcancel} PQgetCancel (Ptr{PGconn},) libpq
+  #  @c Void PQfreeCancel (Ptr{PGcancel},) libpq
+  #  @c Cint PQcancel (Ptr{PGcancel}, Ptr{UInt8}, Cint) libpq
     @c Cint PQrequestCancel (Ptr{PGconn},) libpq
     @c Ptr{UInt8} PQdb (Ptr{PGconn},) libpq
     @c Ptr{UInt8} PQuser (Ptr{PGconn},) libpq
@@ -232,7 +233,7 @@ module libpq_interface
     @c Ptr{PGresult} PQgetResult (Ptr{PGconn},) libpq
     @c Cint PQisBusy (Ptr{PGconn},) libpq
     @c Cint PQconsumeInput (Ptr{PGconn},) libpq
-    @c Ptr{PGnotify} PQnotifies (Ptr{PGconn},) libpq
+    #@c Ptr{PGnotify} PQnotifies (Ptr{PGconn},) libpq
     @c Cint PQputCopyData (Ptr{PGconn}, Ptr{UInt8}, Cint) libpq
     @c Cint PQputCopyEnd (Ptr{PGconn}, Ptr{UInt8}) libpq
     @c Cint PQgetCopyData (Ptr{PGconn}, Ptr{Ptr{UInt8}}, Cint) libpq
@@ -247,7 +248,7 @@ module libpq_interface
     @c PGPing PQping (Ptr{UInt8},) libpq
     @c PGPing PQpingParams (Ptr{Ptr{UInt8}}, Ptr{Ptr{UInt8}}, Cint) libpq
     @c Cint PQflush (Ptr{PGconn},) libpq
-    @c Ptr{PGresult} PQfn (Ptr{PGconn}, Cint, Ptr{Cint}, Ptr{Cint}, Cint, Ptr{PQArgBlock}, Cint) libpq
+  #  @c Ptr{PGresult} PQfn (Ptr{PGconn}, Cint, Ptr{Cint}, Ptr{Cint}, Cint, Ptr{PQArgBlock}, Cint) libpq
     @c ExecStatusType PQresultStatus (Ptr{PGresult},) libpq
     @c Ptr{UInt8} PQresStatus (ExecStatusType,) libpq
     @c Ptr{UInt8} PQresultErrorMessage (Ptr{PGresult},) libpq
@@ -280,7 +281,7 @@ module libpq_interface
     @c Void PQfreemem (Ptr{Void},) libpq
     @c Ptr{PGresult} PQmakeEmptyPGresult (Ptr{PGconn}, ExecStatusType) libpq
     @c Ptr{PGresult} PQcopyResult (Ptr{PGresult}, Cint) libpq
-    @c Cint PQsetResultAttrs (Ptr{PGresult}, Cint, Ptr{PGresAttDesc}) libpq
+    #@c Cint PQsetResultAttrs (Ptr{PGresult}, Cint, Ptr{PGresAttDesc}) libpq
     @c Ptr{Void} PQresultAlloc (Ptr{PGresult}, Cint) libpq
     @c Cint PQsetvalue (Ptr{PGresult}, Cint, Cint, Ptr{UInt8}, Cint) libpq
     @c Cint PQescapeStringConn (Ptr{PGconn}, Ptr{UInt8}, Ptr{UInt8}, Cint, Ptr{Cint}) libpq
@@ -290,7 +291,7 @@ module libpq_interface
     @c Ptr{Cuchar} PQunescapeBytea (Ptr{Cuchar}, Ptr{Cint}) libpq
     @c Cint PQescapeString (Ptr{UInt8}, Ptr{UInt8}, Cint) libpq
     @c Ptr{Cuchar} PQescapeBytea (Ptr{Cuchar}, Cint, Ptr{Cint}) libpq
-    @c Void PQprint (Ptr{FILE}, Ptr{PGresult}, Ptr{PQprintOpt}) libpq
+  #  @c Void PQprint (Ptr{FILE}, Ptr{PGresult}, Ptr{PQprintOpt}) libpq
     @c Void PQdisplayTuples (Ptr{PGresult}, Ptr{FILE}, Cint, Ptr{UInt8}, Cint, Cint) libpq
     @c Void PQprintTuples (Ptr{PGresult}, Ptr{FILE}, Cint, Cint, Cint) libpq
     @c Cint lo_open (Ptr{PGconn}, Oid, Cint) libpq
